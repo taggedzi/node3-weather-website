@@ -1,5 +1,13 @@
 const request = require('postman-request')
-const keys = require('./keys')
+try {
+    // test for local
+    const keys = require('./keys')
+    const key = keys.weatherstackApiKey
+} catch (err) {
+    // test for production
+    const key = process.env.weatherstackApiKey
+}
+
 
 // weatherstack options
 const weatherstackUnits = 'f'  // m = metric, f = fahrenheit, s = scientific (kelvin)

@@ -1,5 +1,12 @@
 const request = require('postman-request')
-const keys = require('./keys')
+try {
+    // test for local
+    const keys = require('./keys')
+    const key = keys.mapboxApiKey
+} catch (err) {
+    // test for production
+    const key = process.env.mapboxApiKey
+}
 
 // mapbox options
 // https://docs.mapbox.com/api/search/geocoding/
