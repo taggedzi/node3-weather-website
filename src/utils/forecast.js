@@ -1,20 +1,12 @@
 const request = require('postman-request')
-try {
-    // test for local
-    const keys = require('./keys')
-    const key = keys.weatherstackApiKey
-} catch (err) {
-    // test for production
-    const key = process.env.weatherstackApiKey
-}
-
+var key = process.env.weatherstackApiKey || require('./keys').weatherstackApiKey
 
 // weatherstack options
 const weatherstackUnits = 'f'  // m = metric, f = fahrenheit, s = scientific (kelvin)
 const weatherstackUrl = (key, lat, long, units) => `http://api.weatherstack.com/current?access_key=${key}&query=${lat},${long}&units=${units}`
 
 const forcast = (latitude, longitude, callback) => {
-    const url = weatherstackUrl(keys.weatherstackApiKey, latitude, longitude, weatherstackUnits)
+    const url = weatherstackUrl(key, latitude, longitude, weatherstackUnits)
     request({url, json: true}, (error, { body }) => {
         if (error) {
             callback(error, undefined)

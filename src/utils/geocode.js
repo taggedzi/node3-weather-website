@@ -1,12 +1,5 @@
 const request = require('postman-request')
-try {
-    // test for local
-    const keys = require('./keys')
-    const key = keys.mapboxApiKey
-} catch (err) {
-    // test for production
-    const key = process.env.mapboxApiKey
-}
+var key = process.env.mapboxApiKey || require('./keys').mapboxApiKey
 
 // mapbox options
 // https://docs.mapbox.com/api/search/geocoding/
@@ -23,7 +16,7 @@ const geocodeURLTemplate = (key,
 
 
 const geocode = (address, callback) => {
-    const url = geocodeURLTemplate(keys.mapboxApiKey, mapboxEndpoint, mapboxLanguage, mapboxMaxResults, encodeURIComponent(address), mapboxTypes)
+    const url = geocodeURLTemplate(key, mapboxEndpoint, mapboxLanguage, mapboxMaxResults, encodeURIComponent(address), mapboxTypes)
     request({url, json: true}, (error, { body }) => {
         if (error) {
             callback(error, undefined)
