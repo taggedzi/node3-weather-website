@@ -1,4 +1,4 @@
-const request = require('request')
+const request = require('postman-request')
 const keys = require('./keys')
 
 // mapbox options
