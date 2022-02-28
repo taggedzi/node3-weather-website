@@ -13,8 +13,29 @@ const forcast = (latitude, longitude, callback) => {
         } else if (body.error) {
             callback('Unable to find location. Try a different search.', undefined)
         } else {
-            const { weather_descriptions:descriptions, temperature, feelslike } = body.current
-            const output = `${descriptions[0]}. It is currently ${temperature} degrees out. It feels like ${feelslike} degrees out.`
+            const { 
+                weather_descriptions:descriptions, 
+                temperature, 
+                feelslike,
+                humidity,
+                wind_dir,
+                wind_speed,
+                pressure,
+                precip,
+                cloudcover,
+                visibility,
+                uv_index,
+                observation_time,
+                weather_icons
+            } = body.current
+            var output = `<img src="${weather_icons[0]}" id="weather-icon" /><p>${descriptions[0]}. It is currently ${temperature}&deg;F `
+            output += `It feels like ${feelslike}&deg;F with humidity of ${humidity}%. `
+            output += `The wind is coming from the ${wind_dir} at a speed of ${wind_speed} mph. `
+            output += `Air preasure is ${pressure} MB. `
+            output += `Precipitation is ${precip} inches with ${cloudcover}% cloud cover. `
+            output += `Visibility is aproximately ${visibility} miles. `
+            output += `UV index is ${uv_index}. </p><hr/>`
+            output += `<p>This report was last updated at: ${observation_time}.</p>`
             callback(undefined, output)
         }
     })
